@@ -1,3 +1,18 @@
-class Solution:
-    def rangeSumBST(self, r: Optional[TreeNode], l: int, h: int) -> int:
-        return (f:=lambda n:f(n.left)+n.val*(l<=n.val<=h)+f(n.right) if n else 0)(r)
+class Solution(object):
+    def rangeSumBST(self, root, low, high):
+        sum_val = 0
+        stack = []
+
+        while root or stack:
+            while root:
+                stack.append(root)
+                root = root.left
+
+            root = stack.pop()
+
+            if low <= root.val <= high:
+                sum_val += root.val
+
+            root = root.right
+
+        return sum_val
